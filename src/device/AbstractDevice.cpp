@@ -6,22 +6,30 @@
 
 #include "AbstractDevice.h"
 
-const char *AbstractDevice::getSerialNumber() {
+String AbstractDevice::getSerialNumber() {
     return this->serialNumber;
 }
 
-void AbstractDevice::setSerialNumber(const char *serialNumber) {
+void AbstractDevice::setSerialNumber(String serialNumber) {
     this->serialNumber = serialNumber;
 }
 
-const char *AbstractDevice::getHelloMessage() {
+String AbstractDevice::getHelloMessage() {
     return helloMessage;
 }
 
-const char *AbstractDevice::getGoodByeMessage() {
+String AbstractDevice::getGoodByeMessage() {
     return goodbyeMessage;
 }
 
 AbstractDevice::AbstractDevice() {
 
+}
+
+void AbstractDevice::setHelloMessage(String helloMessage) {
+    this->helloMessage = helloMessage;
+}
+
+void AbstractDevice::setGoodByeMessage(String goodbyeMessage) {
+    this->goodbyeMessage = goodbyeMessage;
 }

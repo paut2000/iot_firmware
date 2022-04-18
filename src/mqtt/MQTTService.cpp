@@ -7,8 +7,8 @@
 #include "MQTTService.h"
 
 MQTTService::MQTTService(
-        const char* ssid,
-        const char* password,
+        String ssid,
+        String password,
         const IPAddress mqtt_server,
         const int port
 ) {
@@ -25,11 +25,11 @@ void MQTTService::connectWifi() {
     delay(10);
 
     Serial.print("\nConnecting to ");
-    Serial.print("POCO X3 Pro");
+    Serial.print(ssid);
     Serial.print(" with password ");
-    Serial.println("ven8sinvsqeuatv");
+    Serial.println(password);
 
-    WiFi.begin("POCO X3 Pro", "ven8sinvsqeuatv");
+    WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
@@ -71,9 +71,9 @@ void MQTTService::loop() {
     mqttClient->loop();
 }
 
-void MQTTService::setup(const char* clientId,
-                        const char* helloMessage,
-                        const char* goodbyeMessage) {
+void MQTTService::setup(String clientId,
+                        String helloMessage,
+                        String goodbyeMessage) {
     this->clientId = clientId;
     this->helloMessage = helloMessage;
     this->goodbyeMessage = goodbyeMessage;
@@ -84,17 +84,18 @@ void MQTTService::setup(const char* clientId,
 
 void MQTTService::connectToServer() {
     while (!mqttClient->connected()) {
+        Serial.print("Client ID: ");
         Serial.println(clientId);
-        Serial.print("/device/new");
+        Serial.print(HELLO_TOPIC);
         Serial.print(" : ");
         Serial.println(helloMessage);
-        Serial.print("/device/died");
+        Serial.print(GOODBYE_TOPIC);
         Serial.print(" : ");
         Serial.println(goodbyeMessage);
         Serial.print("Attempting MQTT connection...");
-        if (mqttClient->connect(clientId, "/device/died", 2, false, goodbyeMessage)) {
+        if (mqttClient->connect(clientId.c_str(), GOODBYE_TOPIC, 2, false, goodbyeMessage.c_str())) {
             Serial.println("connected");
-            publish("/device/new", helloMessage);
+            publish(HELLO_TOPIC, helloMessage.c_str());
         } else {
             Serial.print("failed, rc=");
             Serial.println(mqttClient->state());

@@ -10,19 +10,22 @@
 
 #include "device/AbstractDevice.h"
 
+#define HELLO_TOPIC "/device/new"
+#define GOODBYE_TOPIC "/device/died"
+
 class MQTTService {
 public:
 
     MQTTService(
-            const char* ssid,
-            const char* password,
+            String ssid,
+            String password,
             const IPAddress mqtt_server,
             const int port
     );
 
-    void setup(const char* clientId,
-               const char* helloMessage,
-               const char* goodbyeMessage);
+    void setup(String clientId,
+               String helloMessage,
+               String goodbyeMessage);
     void loop();
 
     void publish(const char* topic, const char* message);
@@ -34,15 +37,15 @@ private:
     void setupServer();
     void connectToServer();
 
-    const char* ssid;
-    const char* password;
+    String ssid;
+    String password;
 
     IPAddress mqtt_server;
     int port;
-    const char* clientId;
+    String clientId;
 
-    const char* helloMessage;
-    const char* goodbyeMessage;
+    String helloMessage;
+    String goodbyeMessage;
 
     WiFiClient wiFiClient;
     PubSubClient *mqttClient;

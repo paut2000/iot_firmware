@@ -10,7 +10,7 @@
 class Relay : public AbstractDevice {
 public:
 
-    Relay(const int pin);
+    Relay(int pin);
 
     bool getStatus();
 

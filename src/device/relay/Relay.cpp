@@ -11,9 +11,6 @@ Relay::Relay(const int pin) : AbstractDevice() {
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW);
     this->status = LOW;
-
-    helloMessage = (char*) "hello";
-    goodbyeMessage = (char*) "goodbye";
 }
 
 void Relay::turnOn() {

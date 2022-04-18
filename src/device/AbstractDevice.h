@@ -5,26 +5,27 @@
 #ifndef UNTITLED_ABSTRACTDEVICE_H
 #define UNTITLED_ABSTRACTDEVICE_H
 
-
 class AbstractDevice {
 public:
 
     AbstractDevice();
 
-    const char* getSerialNumber();
-    void setSerialNumber(const char* serialNumber);
+    String getSerialNumber();
+    void setSerialNumber(String serialNumber);
 
-    const char* getHelloMessage();
-    const char* getGoodByeMessage();
+    String getHelloMessage();
+    String getGoodByeMessage();
+    void setHelloMessage(String helloMessage);
+    void setGoodByeMessage(String goodbyeMessage);
 
 protected:
 
-    char* helloMessage = nullptr;
-    char* goodbyeMessage = nullptr;
+    String helloMessage = "default hello";
+    String goodbyeMessage = "default goodbye";
 
 private:
 
-    const char* serialNumber;
+    String serialNumber;
 
 };
 
