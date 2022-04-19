@@ -7,6 +7,8 @@
 
 #include "device/AbstractDevice.h"
 
+#define TYPE "Relay"
+
 class Relay : public AbstractDevice {
 public:
 
@@ -17,6 +19,11 @@ public:
     void turnOn();
     void turnOff();
     void switchStatus();
+
+protected:
+
+    void parseData(StaticJsonDocument<256> &jsonDocument) override;
+    void parseType(StaticJsonDocument<256> &jsonDocument) override;
 
 private:
 

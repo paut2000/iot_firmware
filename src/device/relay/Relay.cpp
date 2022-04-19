@@ -34,3 +34,11 @@ void Relay::switchStatus() {
 bool Relay::getStatus() {
     return this->status;
 }
+
+void Relay::parseData(StaticJsonDocument<256> &jsonDocument) {
+    jsonDocument["device"]["data"]["status"] = status;
+}
+
+void Relay::parseType(StaticJsonDocument<256> &jsonDocument) {
+    jsonDocument["device"]["type"] = TYPE;
+}

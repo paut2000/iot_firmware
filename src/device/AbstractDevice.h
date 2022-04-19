@@ -5,6 +5,14 @@
 #ifndef UNTITLED_ABSTRACTDEVICE_H
 #define UNTITLED_ABSTRACTDEVICE_H
 
+#include <Arduino.h>
+#include <ArduinoJson.h>
+
+#define BUFFER_SIZE 256
+
+#define TO_DEVICE_TOPIC_PREFIX "/set/"
+#define FROM_DEVICE_TOPIC_PREFIX "/get/"
+
 class AbstractDevice {
 public:
 
@@ -13,15 +21,13 @@ public:
     String getSerialNumber();
     void setSerialNumber(String serialNumber);
 
-    String getHelloMessage();
-    String getGoodByeMessage();
-    void setHelloMessage(String helloMessage);
-    void setGoodByeMessage(String goodbyeMessage);
+    String serializeIntoHelloMessage();
+    String serializeIntoGoodbyeMessage();
 
 protected:
 
-    String helloMessage = "default hello";
-    String goodbyeMessage = "default goodbye";
+    virtual void parseData(StaticJsonDocument<BUFFER_SIZE> &jsonDocument) = 0;
+    virtual void parseType(StaticJsonDocument<BUFFER_SIZE> &jsonDocument) = 0;
 
 private:
 
