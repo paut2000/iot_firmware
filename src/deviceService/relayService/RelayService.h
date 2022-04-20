@@ -18,6 +18,7 @@ private:
 
     void additionalLoopAction() override;
     void callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) override;
+    void additionalSetupAction() override;
 
     Button *button;
 

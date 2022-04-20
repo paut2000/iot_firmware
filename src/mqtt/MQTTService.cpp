@@ -71,10 +71,10 @@ void MQTTService::connectToServer() {
         Serial.println(clientId);
         Serial.print(HELLO_TOPIC);
         Serial.print(" : ");
-        Serial.println(helloMessage);
+        Serial.println(helloMessage.c_str());
         Serial.print(GOODBYE_TOPIC);
         Serial.print(" : ");
-        Serial.println(goodbyeMessage);
+        Serial.println(goodbyeMessage.c_str());
         Serial.print("Attempting MQTT connection...");
         if (mqttClient->connect(clientId.c_str(), GOODBYE_TOPIC, 2, false, goodbyeMessage.c_str())) {
             Serial.println("connected");

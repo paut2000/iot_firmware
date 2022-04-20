@@ -21,6 +21,7 @@ public:
 protected:
 
     virtual void additionalLoopAction() = 0;
+    virtual void additionalSetupAction() = 0;
     virtual void callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) = 0;
 
     AbstractDevice* device;

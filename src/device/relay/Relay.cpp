@@ -35,10 +35,10 @@ bool Relay::getStatus() {
     return this->status;
 }
 
-void Relay::parseData(StaticJsonDocument<256> &jsonDocument) {
+void Relay::parseData(StaticJsonDocument<BUFFER_SIZE> &jsonDocument) {
     jsonDocument["device"]["data"]["status"] = status;
 }
 
-void Relay::parseType(StaticJsonDocument<256> &jsonDocument) {
+void Relay::parseType(StaticJsonDocument<BUFFER_SIZE> &jsonDocument) {
     jsonDocument["device"]["type"] = TYPE;
 }

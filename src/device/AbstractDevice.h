@@ -8,7 +8,7 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 
-#define BUFFER_SIZE 256
+#define BUFFER_SIZE 512
 
 #define TO_DEVICE_TOPIC_PREFIX "/set/"
 #define FROM_DEVICE_TOPIC_PREFIX "/get/"

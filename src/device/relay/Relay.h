@@ -22,8 +22,8 @@ public:
 
 protected:
 
-    void parseData(StaticJsonDocument<256> &jsonDocument) override;
-    void parseType(StaticJsonDocument<256> &jsonDocument) override;
+    void parseData(StaticJsonDocument<BUFFER_SIZE> &jsonDocument) override;
+    void parseType(StaticJsonDocument<BUFFER_SIZE> &jsonDocument) override;
 
 private:
 

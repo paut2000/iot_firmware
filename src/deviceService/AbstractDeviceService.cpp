@@ -9,6 +9,8 @@ AbstractDeviceService::AbstractDeviceService(AbstractDevice *device, MQTTService
 : device(device), mqttService(mqttService) {}
 
 void AbstractDeviceService::setup() {
+    additionalSetupAction();
+
     mqttService->setup(device->getSerialNumber(),
                        device->serializeIntoHelloMessage(),
                        device->serializeIntoGoodbyeMessage());
@@ -29,6 +31,6 @@ void AbstractDeviceService::setup() {
 }
 
 void AbstractDeviceService::loop() {
-    mqttService->loop();
     additionalLoopAction();
+    mqttService->loop();
 }

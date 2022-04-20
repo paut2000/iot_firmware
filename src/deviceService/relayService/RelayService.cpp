@@ -22,7 +22,7 @@ void RelayService::additionalLoopAction() {
     });
 }
 
-void RelayService::callback(StaticJsonDocument<256> jsonMsg) {
+void RelayService::callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) {
     Relay *relay = (Relay*) device;
 
     String action = jsonMsg["action"];
@@ -38,4 +38,8 @@ void RelayService::callback(StaticJsonDocument<256> jsonMsg) {
 RelayService::RelayService(AbstractDevice *device, MQTTService *mqttService, Button *button)
 : AbstractDeviceService(device, mqttService) {
     this->button = button;
+}
+
+void RelayService::additionalSetupAction() {
+
 }
