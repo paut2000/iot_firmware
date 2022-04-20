@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <component/button/Button.h>
+#include <deviceService/relayService/RelayService.h>
 
 #include "mqtt/MQTTService.h"
 #include "device/relay/Relay.h"
@@ -17,43 +18,24 @@ const IPAddress brokerIp(192, 168, 0, 3);
 
 MQTTService mqttService(SSID, PASSWORD, brokerIp, PORT);
 
-Relay relay(D3);
+#ifdef RELAY
+
+Relay device(D3);
 Button button(D6);
+
+RelayService deviceService(&device, &mqttService, &button);
+
+#endif // RELAY
 
 void setup() {
     Serial.begin(9600);
     delay(1000);
 
-    relay.setSerialNumber(SERIAL_NUMBER);
+    device.setSerialNumber(SERIAL_NUMBER);
 
-    mqttService.addCallback("/set/" + relay.getSerialNumber(), [](char* payload, unsigned int length){
-        StaticJsonDocument<256> jsonMsg;
-        deserializeJson(jsonMsg, payload);
-        String action = jsonMsg["action"];
-        if (action == "enable") {
-            relay.turnOn();
-        }
-        if (action == "disable") {
-            relay.turnOff();
-        }
-    });
-
-    mqttService.setup(relay.getSerialNumber(),
-                      relay.serializeIntoHelloMessage(),
-                      relay.serializeIntoGoodbyeMessage());
+    deviceService.setup();
 }
 
 void loop() {
-
-    button.listenSwitch([](){
-        relay.switchStatus();
-
-        StaticJsonDocument<256> jsonDocument;
-        jsonDocument["status"] = relay.getStatus();
-        char buffer[256];
-        serializeJsonPretty(jsonDocument, buffer, 256);
-        mqttService.publish(("/get/" + relay.getSerialNumber()).c_str(), buffer);
-    });
-
-    mqttService.loop();
+    deviceService.loop();
 }

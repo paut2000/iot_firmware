@@ -45,23 +45,6 @@ void MQTTService::connectWifi() {
 void MQTTService::setupServer() {
     mqttClient->setServer(mqtt_server, port);
     connectToServer();
-
-    for (unsigned int i = 0; i < this->callbackQuantity; i++) {
-        mqttClient->subscribe(this->callbacks[i].topic.c_str());
-    }
-
-    mqttClient->setCallback([this](char* topic, byte* payload, unsigned int length) {
-        String strTopic(topic);
-        for (unsigned int i = 0; i < this->callbackQuantity; i++) {
-            if (strTopic.equals(this->callbacks[i].topic)) {
-                char* p = new char[length];
-                memcpy(p, payload, length);
-                p[length] = '\0';
-                this->callbacks[i].callback(p, length);
-                delete[] p;
-            }
-        }
-    });
 }
 
 void MQTTService::loop() {
@@ -109,21 +92,7 @@ void MQTTService::publish(const char* topic, const char* payload) {
     mqttClient->publish(topic, payload);
 }
 
-void MQTTService::addCallback(String topic, void (*callback)(char*, unsigned int)) {
-    //Копирование предыдущих колбеков
-    Callback *newCallbacks = new Callback[callbackQuantity + 1];
-    for (unsigned int i = 0; i < this->callbackQuantity; i++) {
-        newCallbacks[i] = this->callbacks[i];
-    }
-
-    //Добавление нового колбэка
-    Callback newCallback;
-    newCallback.topic = topic;
-    newCallback.callback = callback;
-    newCallbacks[callbackQuantity] = newCallback;
-
-    delete this->callbacks;
-    this->callbacks = newCallbacks;
-    this->callbackQuantity++;
+void MQTTService::setCallback(const char* topic, std::function<void(char *, uint8_t *, unsigned int)> callback) {
+    mqttClient->subscribe(topic);
+    mqttClient->setCallback(callback);
 }
-

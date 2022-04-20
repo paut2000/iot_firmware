@@ -1,6 +1,7 @@
 //
 // Created by kapers on 20.04.2022.
 //
+#pragma once
 
 #ifndef UNTITLED_ABSTRACTDEVICESERVICE_H
 #define UNTITLED_ABSTRACTDEVICESERVICE_H
@@ -20,12 +21,11 @@ public:
 protected:
 
     virtual void additionalLoopAction() = 0;
-    virtual void callback(char* payload, unsigned int length) = 0;
+    virtual void callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) = 0;
 
     AbstractDevice* device;
     MQTTService* mqttService;
 
 };
-
 
 #endif //UNTITLED_ABSTRACTDEVICESERVICE_H

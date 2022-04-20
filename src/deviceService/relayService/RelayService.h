@@ -7,12 +7,19 @@
 
 
 #include <deviceService/AbstractDeviceService.h>
+#include <component/button/Button.h>
 
-class RelayService : AbstractDeviceService {
+class RelayService : public AbstractDeviceService {
+public:
+
+    RelayService(AbstractDevice *device, MQTTService *mqttService, Button *button);
+
 private:
 
     void additionalLoopAction() override;
-    void callback(char* payload, unsigned int length) override;
+    void callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) override;
+
+    Button *button;
 
 };
 

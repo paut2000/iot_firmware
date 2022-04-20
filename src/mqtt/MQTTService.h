@@ -1,6 +1,7 @@
 //
 // Created by kapers on 05.04.2022.
 //
+#pragma once
 
 #ifndef UNTITLED_TEST_H
 #define UNTITLED_MQTTSERVICE_H
@@ -29,7 +30,7 @@ public:
     void loop();
 
     void publish(const char* topic, const char* message);
-    void addCallback(String topic, void (*callback)(char*, unsigned int));
+    void setCallback(const char* topic, MQTT_CALLBACK_SIGNATURE);
 
 private:
 
@@ -50,15 +51,6 @@ private:
     WiFiClient wiFiClient;
     PubSubClient *mqttClient;
 
-    unsigned int callbackQuantity = 0;
-
-    struct Callback {
-        String topic;
-        void (*callback)(char*, unsigned int);
-    } *callbacks;
-
 };
-
-
 
 #endif //UNTITLED_TEST_H
