@@ -31,6 +31,6 @@ void AbstractDeviceService::setup() {
 }
 
 void AbstractDeviceService::loop() {
-    additionalLoopAction();
     mqttService->loop();
+    additionalLoopAction();
 }

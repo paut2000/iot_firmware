@@ -33,10 +33,14 @@ RelayService deviceService(&device, &mqttService, &button);
 
 #define DHTTYPE DHT22
 
-DHTDevice device(D6, DHTTYPE, 2000);
+DHTDevice device(D6, DHTTYPE, 300000);
 DHTService deviceService(&device, &mqttService);
 
 #endif // DHT
+
+#ifdef RGBA_STRIP
+
+#endif // RGBA_STRIP
 
 void setup() {
     Serial.begin(9600);

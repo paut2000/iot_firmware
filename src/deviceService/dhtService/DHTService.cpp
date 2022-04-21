@@ -23,7 +23,7 @@ void DHTService::additionalLoopAction() {
     serializeJsonPretty(jsonDocument, buffer, BUFFER_SIZE);
     mqttService->publish(("/get/" + device->getSerialNumber()).c_str(), buffer);
 
-    delay(dht->getUpdateFrequency());
+    EspClass::deepSleep(dht->getUpdateFrequency() * 1000);
 }
 
 void DHTService::callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) {
