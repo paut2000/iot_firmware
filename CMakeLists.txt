@@ -30,4 +30,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(Z_DUMMY_TARGET ${SRC_LIST} src/deviceService/dhtService/DHTService.cpp src/deviceService/dhtService/DHTService.h src/device/rgbaStrip/RGBAStrip.cpp src/device/rgbaStrip/RGBAStrip.h src/deviceService/rgbaStripService/RGBAStripService.cpp src/deviceService/rgbaStripService/RGBAStripService.h)
+add_executable(Z_DUMMY_TARGET ${SRC_LIST})

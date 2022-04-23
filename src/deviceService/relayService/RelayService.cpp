@@ -25,12 +25,12 @@ void RelayService::additionalLoopAction() {
 void RelayService::callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) {
     Relay *relay = (Relay*) device;
 
-    String action = jsonMsg["action"];
+    bool status = jsonMsg["status"];
 
-    if (action == "enable") {
+    if (status == false) {
         relay->turnOn();
     }
-    if (action == "disable") {
+    if (status == true) {
         relay->turnOff();
     }
 }

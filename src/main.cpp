@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include <deviceService/dhtService/DHTService.h>
+#include <device/rgbaStrip/RGBAStrip.h>
+#include <deviceService/rgbaStripService/RGBAStripService.h>
 
 #include "mqtt/MQTTService.h"
 #include "device/relay/Relay.h"
@@ -12,11 +14,10 @@
 #define PORT 1883
 const IPAddress brokerIp(192, 168, 0, 3);
 
-//#define SERIAL_NUMBER "relay-asghg48fafg"
-#define SERIAL_NUMBER "dht-asghg48fafg"
+#define SERIAL_NUMBER "relay-asghg48fafg"
 
-//#define RELAY
-#define DHT
+#define RELAY
+//#define DHT
 //#define RGBA_STRIP
 
 MQTTService mqttService(SSID, PASSWORD, brokerIp, PORT);
@@ -39,6 +40,9 @@ DHTService deviceService(&device, &mqttService);
 #endif // DHT
 
 #ifdef RGBA_STRIP
+
+RGBAStrip device(D2, D3, D1);
+RGBAStripService deviceService(&device, &mqttService);
 
 #endif // RGBA_STRIP
 
