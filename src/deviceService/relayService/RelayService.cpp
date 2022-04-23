@@ -27,10 +27,10 @@ void RelayService::callback(StaticJsonDocument<BUFFER_SIZE> jsonMsg) {
 
     bool status = jsonMsg["status"];
 
-    if (status == false) {
+    if (status == true) {
         relay->turnOn();
     }
-    if (status == true) {
+    if (status == false) {
         relay->turnOff();
     }
 }

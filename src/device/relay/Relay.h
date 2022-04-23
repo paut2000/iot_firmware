@@ -12,7 +12,7 @@
 class Relay : public AbstractDevice {
 public:
 
-    Relay(int pin);
+    Relay(int pin, bool onVal);
 
     bool getStatus();
 
@@ -29,6 +29,8 @@ private:
 
     int pin;
     bool status;
+
+    bool onVal;
 
 };
 

@@ -6,28 +6,29 @@
 
 #include "Relay.h"
 
-Relay::Relay(const int pin) : AbstractDevice() {
+Relay::Relay(const int pin, const bool onVal) : AbstractDevice() {
+    this->onVal = onVal;
     this->pin = pin;
     pinMode(pin, OUTPUT);
-    digitalWrite(pin, LOW);
-    this->status = LOW;
+    digitalWrite(pin, !onVal);
+    this->status = false;
 }
 
 void Relay::turnOn() {
-    digitalWrite(pin, HIGH);
-    this->status = HIGH;
+    digitalWrite(pin, onVal);
+    this->status = true;
 }
 
 void Relay::turnOff() {
-    digitalWrite(pin, LOW);
-    this->status = LOW;
+    digitalWrite(pin, !onVal);
+    this->status = false;
 }
 
 void Relay::switchStatus() {
-    if (status == LOW) {
-        turnOn();
-    } else {
+    if (status == true) {
         turnOff();
+    } else {
+        turnOn();
     }
 }
 
