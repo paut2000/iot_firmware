@@ -47,9 +47,11 @@ void MQTTService::setupServer() {
     connectToServer();
 }
 
-void MQTTService::loop() {
+void MQTTService::loop(const char* topic, std::function<void(char *, uint8_t *, unsigned int)> callback) {
     if (!mqttClient->connected()) {
         connectToServer();
+        mqttClient->subscribe(topic);
+        mqttClient->setCallback(callback);
     }
     mqttClient->loop();
 }

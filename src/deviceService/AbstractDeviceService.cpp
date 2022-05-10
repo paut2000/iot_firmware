@@ -26,6 +26,13 @@ void AbstractDeviceService::setup() {
 }
 
 void AbstractDeviceService::loop() {
-    mqttService->loop();
+    mqttService->loop(("/set/" + device->getSerialNumber()).c_str(),
+                      [this](char *topic, uint8_t * payload, unsigned int length) {
+                          String strTopic(topic);
+                          if (!strTopic.equals("/set/" + device->getSerialNumber())) return;
+                          StaticJsonDocument<BUFFER_SIZE> jsonMsg;
+                          deserializeJson(jsonMsg, payload);
+                          callback(jsonMsg);
+                      });
     additionalLoopAction();
 }

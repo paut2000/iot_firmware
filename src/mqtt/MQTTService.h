@@ -27,7 +27,7 @@ public:
     void setup(String clientId,
                String helloMessage,
                String goodbyeMessage);
-    void loop();
+    void loop(const char* topic, std::function<void(char *, uint8_t *, unsigned int)> callback);
 
     void publish(const char* topic, const char* message);
     void publishRetain(const char* topic, const char* message);
