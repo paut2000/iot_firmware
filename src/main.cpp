@@ -14,11 +14,11 @@
 #define PORT 1883
 const IPAddress brokerIp(192, 168, 0, 3);
 
-#define SERIAL_NUMBER "dht-asghg48fafg"
+#define SERIAL_NUMBER WiFi.macAddress()
 
 //#define RELAY
-#define DHT
-//#define RGBA_STRIP
+//#define DHT
+#define RGBA_STRIP
 
 MQTTService mqttService(SSID, PASSWORD, brokerIp, PORT);
 

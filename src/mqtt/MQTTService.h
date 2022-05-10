@@ -11,7 +11,7 @@
 
 #include "device/AbstractDevice.h"
 
-#define HELLO_TOPIC "/device/new"
+#define HELLO_TOPIC "/device/new/"
 #define GOODBYE_TOPIC "/device/died"
 
 class MQTTService {
@@ -30,6 +30,7 @@ public:
     void loop();
 
     void publish(const char* topic, const char* message);
+    void publishRetain(const char* topic, const char* message);
     void setCallback(const char* topic, MQTT_CALLBACK_SIGNATURE);
 
 private:

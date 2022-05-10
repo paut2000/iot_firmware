@@ -69,16 +69,16 @@ void MQTTService::connectToServer() {
     while (!mqttClient->connected()) {
         Serial.print("Client ID: ");
         Serial.println(clientId);
-        Serial.print(HELLO_TOPIC);
+        Serial.print(HELLO_TOPIC + WiFi.macAddress());
         Serial.print(" : ");
         Serial.println(helloMessage.c_str());
         Serial.print(GOODBYE_TOPIC);
         Serial.print(" : ");
         Serial.println(goodbyeMessage.c_str());
         Serial.print("Attempting MQTT connection...");
-        if (mqttClient->connect(clientId.c_str(), GOODBYE_TOPIC, 2, false, goodbyeMessage.c_str())) {
+        if (mqttClient->connect(clientId.c_str(), "", "", GOODBYE_TOPIC, 2, false, goodbyeMessage.c_str(), true)) {
             Serial.println("connected");
-            publish(HELLO_TOPIC, helloMessage.c_str());
+            publishRetain((HELLO_TOPIC + WiFi.macAddress()).c_str(), helloMessage.c_str());
         } else {
             Serial.print("failed, rc=");
             Serial.println(mqttClient->state());
@@ -90,6 +90,10 @@ void MQTTService::connectToServer() {
 
 void MQTTService::publish(const char* topic, const char* payload) {
     mqttClient->publish(topic, payload);
+}
+
+void MQTTService::publishRetain(const char *topic, const char *message) {
+    mqttClient->publish(topic, message, true);
 }
 
 void MQTTService::setCallback(const char* topic, std::function<void(char *, uint8_t *, unsigned int)> callback) {
